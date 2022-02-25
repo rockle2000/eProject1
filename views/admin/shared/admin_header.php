@@ -1,3 +1,10 @@
+<?php
+   session_start();
+   if (!isset($_SESSION['email'])) {
+    header('Location: ../login.php');
+ }
+ $url = $_SERVER['REQUEST_URI'];
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -103,7 +110,7 @@
           <img src="../../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block"><?php echo $_SESSION['email'] ?></a>
         </div>
       </div>
 
@@ -125,15 +132,6 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-building"></i>
               <p>
@@ -143,7 +141,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="../departments/list.php" class="nav-link  <?php echo strpos($url, '/departments/list.php') != false ? 'active' : '' ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>List</p>
                 </a>
@@ -156,7 +154,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item">
+          <li class="nav-item <?php echo (strpos($url, 'centers/list.php') != false || strpos($url, 'centers/add.php') != false) ? 'menu-open' : '' ?>">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-clinic-medical"></i>
               <p>
@@ -166,20 +164,20 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="../centers/list.php" class="nav-link <?php echo strpos($url, 'centers/list.php') != false ? 'active' : '' ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>List</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="../centers/add.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add new center</p>
                 </a>
               </li>
             </ul>
           </li>
-          <li class="nav-item">
+          <li class="nav-item <?php echo (strpos($url, 'employees/list.php') != false || strpos($url, 'facilities/add.php') != false) ? 'menu-open' : '' ?>">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-user-md"></i>
               <p>
@@ -189,20 +187,20 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="../employees/list.php" class="nav-link <?php echo strpos($url, 'employees/list.php') != false ? 'active' : '' ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>List</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="../employees/add.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add new employee</p>
                 </a>
               </li>
             </ul>
           </li>
-          <li class="nav-item">
+          <li class="nav-item <?php echo (strpos($url, 'facilities/list.php') != false || strpos($url, 'facilities/add.php') != false) ? 'menu-open' : '' ?>">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-warehouse"></i>
               <p>
@@ -212,13 +210,13 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="../facilities/list.php" class="nav-link <?php echo strpos($url, 'facilities/list.php') != false ? 'active' : '' ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>List</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="../facilities/add.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add new facility</p>
                 </a>
@@ -233,7 +231,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item <?php echo (strpos($url, '_services/list.php') != false || strpos($url, '_services/add_service.php') != false) ? 'menu-open' : '' ?>">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-ambulance"></i>
               <p>
@@ -243,7 +241,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/charts/chartjs.html" class="nav-link">
+                <a href="../_services/list.php" class="nav-link <?php echo strpos($url, '_services/list.php') != false ? 'active' : '' ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>List</p>
                 </a>
@@ -257,7 +255,7 @@
             </ul>
           </li>
           <li class="nav-item">
-              <a href="#" class="nav-link">
+            <a href="../logout.php" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
                 Sign out
