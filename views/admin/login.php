@@ -48,50 +48,39 @@ session_start();
         $email = addslashes($email);
         $password = strip_tags($password);
         $password = addslashes($password);
-        if ($email == "" || $password == "") {
-            echo "username hoặc password bạn không được để trống!";
+        $sql = "SELECT email,`password` FROM `admin` WHERE email=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        echo $password;
+        echo $row['password'];
+        if (password_verify($password, $row['password'])) {
+            $_SESSION['email'] = $email;
+            header('location: departments/list.php');
         } else {
-
-            $sql = "SELECT * FROM `admin` WHERE email=? AND `password` = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param('ss', $email, $password);
-            if ($query = $conn->prepare($sql)) {
-                $stmt->execute();
-                $result = $stmt->get_result();
-                echo $result->num_rows;
-                if ($result->num_rows > 0) {
-                    $_SESSION['email'] = $email;
-                    header('location: departments/list.php');
-                } else
-                    echo "<h2>Login failed</h2>";
-            } else {
-                $error = $mysqli->errno . ' ' . $mysqli->error;
-                echo $error;
-            }
-
-            // $sql = "select * from users where username = '$username' and password = '$password' ";
-            // $query = mysqli_query($conn, $sql);
-            // $num_rows = mysqli_num_rows($query);
-            // if ($num_rows == 0) {
-            //     echo "tên đăng nhập hoặc mật khẩu không đúng !";
-            // } else {
-            //     //tiến hành lưu tên đăng nhập vào session để tiện xử lý sau này
-            //     $_SESSION['username'] = $username;
-            //     // Thực thi hành động sau khi lưu thông tin vào session
-            //     // ở đây mình tiến hành chuyển hướng trang web tới một trang gọi là index.php
-            //     header('Location: index.php');
-            // }
+            $_SESSION['err_login'] = "Invalid username or password";
         }
+        $stmt->close();
+        CloseCon($conn);
     }
     ?>
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
                 <form class="login100-form validate-form flex-sb flex-w" action="login.php" method="POST">
-                    <span class="login100-form-title p-b-32">
+
+
+                    <?php if (isset($_SESSION['err_login'])) { ?>
+                        <div class="alert alert-danger" style="width: 100%;">
+                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                            <?php echo $_SESSION['err_login']; ?>
+                        </div>
+                    <?php } ?>
+                    <span class="login100-form-title p-b-32 text-center">
                         Admin Login
                     </span>
-
                     <span class="txt1 p-b-11">
                         Username
                     </span>
