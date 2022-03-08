@@ -64,7 +64,7 @@ CloseCon($conn);
                                 <div class="form-group row">
                                     <label for="txtCenterName" class="col-sm-2 col-form-label">Center Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="txtCenterName" name="txtCenterName" value="" placeholder="Center name">
+                                        <input type="text" class="form-control" id="txtCenterName" name="txtCenterName" value="" placeholder="Center Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">

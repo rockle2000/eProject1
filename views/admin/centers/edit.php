@@ -23,7 +23,7 @@ if (isset($_POST["btn_submit"])) {
         $description = $_POST["txtDescription"];
         $status = $_POST["ddlStatus"];
         if (ctype_space($center_name) || trim($center_name) == "") {
-            $_SESSION['failed'] = "Department name cannot be null";
+            $_SESSION['failed'] = "Center name cannot be null";
             $flag = false;
         }
         if (ctype_space($description) || trim($description) == "") {
@@ -80,7 +80,7 @@ if (isset($_POST["btn_submit"])) {
                                 <div class="form-group row">
                                     <label for="txtCenterName" class="col-sm-2 col-form-label">Center Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="txtCenterName" name="txtCenterName" value="<?php echo $row['center_name'] ?>" placeholder="Service name">
+                                        <input type="text" class="form-control" id="txtCenterName" name="txtCenterName" value="<?php echo $row['center_name'] ?>" placeholder="Center Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
