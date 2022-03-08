@@ -1,7 +1,6 @@
  <?php 
-  require_once "../shared/admin_header.html"
-
-  ?>
+  require_once "../shared/admin_header.php";
+?>
 
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -37,7 +36,7 @@
           <?php 
             require_once "../../../db_connect.php";
             $conn = OpenCon();
-            $sql = "SELECT * FROM departments";
+            $sql = "SELECT d.id,d.dept_name,d.description,c.center_name,d.status FROM `departments` d JOIN `centers` c ON d.center_id = c.id";
               if ($result = mysqli_query($conn, $sql)) {
                 if (mysqli_num_rows($result) > 0) {
                   ?>
@@ -46,8 +45,8 @@
                         <tr>
                           <th>Id</th>
                           <th>DeptName</th>
+                          <th>Center</th>
                           <th>Description</th>
-                          <th>Image</th>
                           <th>Status</th>
                           <th>Action</th>
                         </tr>
@@ -58,8 +57,8 @@
                         <tr>
                             <td><?php echo $row['id']; ?></td>
                             <td><?php echo $row['dept_name']; ?></td>
+                            <td><?php echo $row['center_name']?></td>
                             <td><?php echo $row['description']; ?></td>
-                            <td><?php echo $row['image']; ?></td>
                             <td>
                               <?php
                                 if ($row['status']) {
@@ -80,16 +79,16 @@
                                ?>
                             </td>
                             <td>
-                              <a href="#" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
+                              <a href="edit.php?id=<?php echo $row['id'];?>" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
                               <span>
                                   <?php
                                     if ($row['status']) {
                                       ?>
-                                          <a href="#" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                                          <a href="delete.php?id=<?php echo $row['id'];?>"  onclick="return confirm('Are you sure?')" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
                                       <?php
                                     }else{
                                         ?>
-                                          <a href="#" class="btn btn-success"><i class="fas fa-plus"></i> Active</a>
+                                          <a href="active.php?id=<?php echo $row['id'];?>" class="btn btn-success"><i class="fas fa-plus"></i> Active</a>
                                         <?php
                                       }
                                    ?>
@@ -137,7 +136,34 @@
       $("#example1").DataTable({
          "responsive": true
           // , "lengthChange": false
-          , "pageLength": 2
+          , "pageLength":5
       })
   });
+  <?php
+  if (isset($_SESSION['success'])) {
+    ?>
+        toastr.options = {
+            "timeOut": 3000,
+            "progressBar": true
+        }
+        var message = "<?php echo $_SESSION['success'] ?>";
+        toastr.success(message);
+    <?php
+    unset($_SESSION['success']);
+    }
+    ?>
+
+    <?php
+    if (isset($_SESSION['failed'])) {
+    ?>
+        toastr.options = {
+            "timeOut": 3000,
+            "progressBar": true
+        }
+        var message = '<?php echo $_SESSION["failed"] ?>';
+        toastr.error(message);
+    <?php
+    }
+    unset($_SESSION['failed']);
+    ?>
 </script>
