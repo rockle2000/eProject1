@@ -1,6 +1,7 @@
 <?php
 require_once "../shared/admin_header.php";
 require_once "../../../db_connect.php";
+require_once "../../../util.php";
 // unset($_SESSION['success']);
 // unset($_SESSION['failed']);
 
@@ -8,8 +9,8 @@ function add($conn)
 {
     if (isset($_POST["btn_submit"])) {
         if (isset($_POST["txtDeptName"]) && isset($_POST["txtDescription"])) {
-            $dept_name = $_POST["txtDeptName"];
-            $description = $_POST["txtDescription"];
+            $dept_name = test_input($_POST["txtDeptName"]);
+            $description = test_input($_POST["txtDescription"]);
             $center_id = $_POST["ddlCenter"];
             $status = $_POST["ddlStatus"];
             if (ctype_space($dept_name) || trim($dept_name) == "") {

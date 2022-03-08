@@ -1,6 +1,7 @@
 <?php
 require_once "../shared/admin_header.php";
 require_once "../../../db_connect.php";
+require_once "../../../util.php";
 unset($_SESSION['success']);
 unset($_SESSION['failed']);
 
@@ -9,8 +10,8 @@ if (isset($_POST["btn_submit"])) {
     $conn = OpenCon();
     if (isset($_POST["txtServiceName"]) && isset($_POST["txtDescription"])) {
         $id = $_POST["txtId"];
-        $service_name = $_POST["txtServiceName"];
-        $description = $_POST["txtDescription"];
+        $service_name = test_input($_POST["txtServiceName"]);
+        $description = test_input($_POST["txtDescription"]);
         $status = $_POST["ddlStatus"];
         if (ctype_space($service_name) || trim($service_name) == "") {
             $_SESSION['failed'] = "Service name cannot be null";

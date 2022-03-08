@@ -1,6 +1,7 @@
 <?php
 require_once "../shared/admin_header.php";
 require_once "../../../db_connect.php";
+require_once "../../../util.php";
 unset($_SESSION['success']);
 unset($_SESSION['failed']);
 
@@ -9,8 +10,8 @@ if (isset($_POST["btn_submit"])) {
     $conn = OpenCon();
     if (isset($_POST["txtCenterName"]) && isset($_POST["txtDescription"])) {
         $id = $_POST["txtId"];
-        $center_name = $_POST["txtCenterName"];
-        $description = $_POST["txtDescription"];
+        $center_name = test_input($_POST["txtCenterName"]);
+        $description =  test_input($_POST["txtDescription"]);
         $status = $_POST["ddlStatus"];
         if (ctype_space($center_name) || trim($center_name) == "") {
             $_SESSION['failed'] = "Center name cannot be null";

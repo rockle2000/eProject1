@@ -2,41 +2,75 @@
 require_once "../shared/admin_header.php";
 require_once "../../../db_connect.php";
 require_once "../../../util.php";
-// unset($_SESSION['success']);
-// unset($_SESSION['failed']);
+unset($_SESSION['success']);
+unset($_SESSION['failed']);
 function add($conn)
 {
     if (isset($_POST["btn_submit"])) {
-        if (isset($_POST["txtCenterName"]) && isset($_POST["txtDescription"])) {
-            $center_name = test_input($_POST["txtCenterName"]);
+        if (isset($_POST["txtName"]) && isset($_POST["txtDescription"])) {
+            $name = test_input($_POST["txtName"]);
             $description = test_input($_POST["txtDescription"]);
             $status = $_POST["ddlStatus"];
-            if (ctype_space($center_name) || trim($center_name) == "") {
-                $_SESSION['failed'] = "Center name cannot be null";
+            if (ctype_space($name) || trim($name) == "") {
+                $_SESSION['failed'] = "Facility name cannot be null";
                 return;
             }
             if (ctype_space($description) || trim($description) == "") {
                 $_SESSION['failed'] = "Description cannot be null";
                 return;
             }
-            $stmt = $conn->prepare("SELECT * FROM `centers` WHERE `center_name` = ?");
-            $stmt->bind_param("s", $center_name);
+            if ($_FILES["fileupload"]["error"] == 4) {
+                $_SESSION['failed'] = "Image file cannot be null";
+                return;
+            }
+            // Kiểm tra dữ liệu có bị lỗi không
+            if ($_FILES["fileupload"]['error'] != 0) {
+                $_SESSION['failed'] = "Error while uploading file";
+                return;
+            }
+            $stmt = $conn->prepare("SELECT * FROM `facilities` WHERE `facility_name` = ?");
+            $stmt->bind_param("s", $name);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows) {
-                $_SESSION['failed'] = "Center name had already existed";
-                mysqli_free_result($result);
+                $_SESSION['failed'] = "Facility name had already existed";
                 return;
             }
-            $stmt = $conn->prepare("INSERT INTO `centers` (`center_name`, `description`,`status`) VALUES (?,?,?)");
-            $stmt->bind_param("ssi", $center_name, $description, $status);
+            // Đã có dữ liệu upload, thực hiện xử lý file upload
+            //Thư mục bạn sẽ lưu file upload
+            $target_dir    = "../../../upload/facilities_img/";
+            //Vị trí file lưu tạm trong server (file sẽ lưu trong uploads, với tên giống tên ban đầu)
+            $target_file   = round(microtime(true) * 1000) . basename($_FILES["fileupload"]["name"]);
+            $allowUpload   = true;
+            //Lấy phần mở rộng của file (jpg, png, ...)
+            $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
+            //Những loại file được phép upload
+            $allowtypes    = array('jpg', 'png', 'jpeg', 'gif');
+            // Kiểm tra kiểu file
+            if (!in_array($imageFileType, $allowtypes)) {
+                $_SESSION['failed'] = "Image type allowed are JPG, PNG, JPEG, GIF";
+                $allowUpload = false;
+                return;
+            }
+            if ($allowUpload) {
+                // Xử lý di chuyển file tạm ra thư mục cần lưu trữ, dùng hàm move_uploaded_file
+                if (move_uploaded_file($_FILES["fileupload"]["tmp_name"], $target_dir . $target_file)) {
+                } else {
+                    $_SESSION['failed'] = "Error while uploading file.";
+                    return;
+                }
+            } else {
+                $_SESSION['failed'] = "Error";
+                return;
+            }
+            $stmt = $conn->prepare("INSERT INTO `facilities` (`facility_name`, `description`, `image`,`status`) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("sssi", $name, $description, $target_file, $status);
             $stmt->execute();
             if ($stmt->affected_rows >= 1) {
-                $_SESSION['success'] = "Add new center successfully";
+                $_SESSION['success'] = "Add new facility successfully";
             } else {
-                $_SESSION['failed'] = "Add new center failed !";
+                $_SESSION['failed'] = "Add new facility failed !";
             }
-            mysqli_free_result($result);
             $stmt->close();
         }
     }
@@ -56,22 +90,22 @@ CloseCon($conn);
                     <!-- Horizontal Form -->
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Add new center</h3>
+                            <h3 class="card-title">Add new facility</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
-                        <form class="form-horizontal" action="add.php" method="POST">
+                        <form class="form-horizontal" action="add.php" method="POST" enctype="multipart/form-data">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="txtCenterName" class="col-sm-2 col-form-label">Center Name</label>
+                                    <label for="txtName" class="col-sm-2 col-form-label">Facility Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="txtCenterName" name="txtCenterName" value="" placeholder="Center Name">
+                                        <input type="text" class="form-control" id="txtName" name="txtName" value="" placeholder="Facility name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="txtDescription" class="col-sm-2 col-form-label">Description</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="txtDescription" name="txtDescription" value="" placeholder="Description">
+                                    <input type="text" class="form-control" id="txtDescription" name="txtDescription" value="" placeholder="Description">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -81,6 +115,12 @@ CloseCon($conn);
                                             <option value="1">Available</option>
                                             <option value="0">Disabled</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="fileupload" class="col-sm-2 col-form-label">Image</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" multiple class="form-control" id="fileupload" name="fileupload">
                                     </div>
                                 </div>
                             </div>
