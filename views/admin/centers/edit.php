@@ -4,16 +4,6 @@ require_once "../../../db_connect.php";
 unset($_SESSION['success']);
 unset($_SESSION['failed']);
 
-if (isset($_GET["id"]) && !empty($_GET["id"])) {
-    $conn = OpenCon();
-    $stmt = $conn->prepare("SELECT * FROM `centers` WHERE `id` = ?");
-    $stmt->bind_param("i", $_GET["id"]);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = mysqli_fetch_array($result);
-    mysqli_free_result($result);
-    CloseCon($conn);
-}
 if (isset($_POST["btn_submit"])) {
     $flag = true;
     $conn = OpenCon();
@@ -74,6 +64,22 @@ if (isset($_POST["btn_submit"])) {
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
+                        <?php
+                        if (isset($_GET["id"]) && !empty($_GET["id"])) {
+                            $conn = OpenCon();
+                            $stmt = $conn->prepare("SELECT * FROM `centers` WHERE `id` = ?");
+                            $stmt->bind_param("i", $_GET["id"]);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            $row = mysqli_fetch_array($result);
+                            mysqli_free_result($result);
+                            CloseCon($conn);
+                            if (!$row) {
+                                // redirect to error page
+                                echo ("<script>location.href = '/eProject1/views/admin/shared/error.php';</script>");
+                            }
+                        }
+                        ?>
                         <form class="form-horizontal" action="edit.php" method="POST">
                             <input type="hidden" name="txtId" id="txtId" value="<?php echo $row['id'] ?>">
                             <div class="card-body">

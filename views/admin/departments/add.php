@@ -4,15 +4,6 @@ require_once "../../../db_connect.php";
 // unset($_SESSION['success']);
 // unset($_SESSION['failed']);
 
-
-$conn = OpenCon();
-$stmt = $conn->prepare("SELECT * FROM `centers` WHERE `status` = 1");
-$stmt->execute();
-$result = $stmt->get_result();
-$row = mysqli_fetch_array($result);
-mysqli_free_result($result);
-CloseCon($conn);
-
 function add($conn)
 {
     if (isset($_POST["btn_submit"])) {
