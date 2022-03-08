@@ -84,7 +84,7 @@
                                   <?php
                                     if ($row['status']) {
                                       ?>
-                                          <a href="delete.php?id=<?php echo $row['id'];?>"  onclick="return confirm('Are you sure?')" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                                          <a href="delete.php?id=<?php echo $row['id'];?>"  onclick="return confirm('Are you sure you want to delete this department ?')" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
                                       <?php
                                     }else{
                                         ?>

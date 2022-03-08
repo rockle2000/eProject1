@@ -1,6 +1,7 @@
 <?php 
   require_once "../shared/admin_header.php";
 ?>
+
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -8,12 +9,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Services</h1>
+            <h1 class="m-0">Centers</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Services</li>
+              <li class="breadcrumb-item active">Centers</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -29,13 +30,13 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header bg-primary">
-                <h3 class="card-title">List Services</h3>
+                <h3 class="card-title">List Centers</h3>
               </div>
               <div class="card-body">
           <?php 
             require_once "../../../db_connect.php";
             $conn = OpenCon();
-            $sql = "SELECT * FROM services";
+            $sql = "SELECT * FROM centers";
               if ($result = mysqli_query($conn, $sql)) {
                 if (mysqli_num_rows($result) > 0) {
                   ?>
@@ -43,9 +44,8 @@
                       <thead>
                         <tr>
                           <th>Id</th>
-                          <th>Service Name</th>
+                          <th>Center Name</th>
                           <th>Description</th>
-                          <th>Image</th>
                           <th>Status</th>
                           <th>Action</th>
                         </tr>
@@ -55,9 +55,8 @@
                         ?>
                         <tr>
                             <td><?php echo $row['id']; ?></td>
-                            <td><?php echo $row['service_name']; ?></td>
+                            <td><?php echo $row['center_name']; ?></td>
                             <td><?php echo $row['description']; ?></td>
-                            <td> <img style="width: 150px; height: 150px;" src="../../../upload/services_img/<?php echo $row['image']; ?>" alt="No image"></td>
                             <td>
                               <?php
                                 if ($row['status']) {
@@ -83,7 +82,7 @@
                                   <?php
                                     if ($row['status']) {
                                       ?>
-                                          <a href="delete.php?id=<?php echo $row['id'];?>" onclick="return confirm('Are you sure you want to delete this service?')" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
+                                          <a href="delete.php?id=<?php echo $row['id'];?>" onclick="return confirm('Are you sure you want to delete this center ?')" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
                                       <?php
                                     }else{
                                         ?>
@@ -109,7 +108,7 @@
                     <?php
                 }
             } else {
-                echo "ERROR: Cannot execute $sql. " . mysqli_error($conn);
+                echo "ERROR: Không thể thực thi câu lệnh $sql. " . mysqli_error($conn);
             }
             // Đóng kết nối
           CloseCon($conn);
@@ -135,7 +134,7 @@
       $("#example1").DataTable({
          "responsive": true
           // , "lengthChange": false
-          , "pageLength": 2
+          , "pageLength": 5
       })
   });
   <?php

@@ -67,7 +67,6 @@ function add($conn)
             $stmt->execute();
             if ($stmt->affected_rows >= 1) {
                 $_SESSION['success'] = "Add new service successfully";
-                return;
             } else {
                 $_SESSION['failed'] = "Add new service failed !";
             }

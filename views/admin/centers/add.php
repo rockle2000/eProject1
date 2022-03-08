@@ -3,48 +3,37 @@ require_once "../shared/admin_header.php";
 require_once "../../../db_connect.php";
 // unset($_SESSION['success']);
 // unset($_SESSION['failed']);
-
-
-$conn = OpenCon();
-$stmt = $conn->prepare("SELECT * FROM `centers` WHERE `status` = 1");
-$stmt->execute();
-$result = $stmt->get_result();
-$row = mysqli_fetch_array($result);
-mysqli_free_result($result);
-CloseCon($conn);
-
 function add($conn)
 {
     if (isset($_POST["btn_submit"])) {
-        if (isset($_POST["txtDeptName"]) && isset($_POST["txtDescription"])) {
-            $dept_name = $_POST["txtDeptName"];
+        if (isset($_POST["txtCenterName"]) && isset($_POST["txtDescription"])) {
+            $center_name = $_POST["txtCenterName"];
             $description = $_POST["txtDescription"];
-            $center_id = $_POST["ddlCenter"];
             $status = $_POST["ddlStatus"];
-            if (ctype_space($dept_name) || trim($dept_name) == "") {
-                $_SESSION['failed'] = "Department name cannot be null";
+            if (ctype_space($center_name) || trim($center_name) == "") {
+                $_SESSION['failed'] = "Center name cannot be null";
                 return;
             }
             if (ctype_space($description) || trim($description) == "") {
                 $_SESSION['failed'] = "Description cannot be null";
                 return;
             }
-            $stmt = $conn->prepare("SELECT * FROM `departments` WHERE `dept_name` = ?");
-            $stmt->bind_param("s", $dept_name);
+            $stmt = $conn->prepare("SELECT * FROM `centers` WHERE `center_name` = ?");
+            $stmt->bind_param("s", $center_name);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows) {
-                $_SESSION['failed'] = "Deparment name had already existed";
+                $_SESSION['failed'] = "Center name had already existed";
                 mysqli_free_result($result);
                 return;
             }
-            $stmt = $conn->prepare("INSERT INTO `departments` (`dept_name`,`center_id`, `description`,`status`) VALUES (?,?, ?,?)");
-            $stmt->bind_param("sisi", $dept_name,$center_id, $description, $status);
+            $stmt = $conn->prepare("INSERT INTO `centers` (`center_name`, `description`,`status`) VALUES (?,?,?)");
+            $stmt->bind_param("ssi", $center_name, $description, $status);
             $stmt->execute();
             if ($stmt->affected_rows >= 1) {
-                $_SESSION['success'] = "Add new department successfully";
+                $_SESSION['success'] = "Add new center successfully";
             } else {
-                $_SESSION['failed'] = "Add new department failed !";
+                $_SESSION['failed'] = "Add new center failed !";
             }
             mysqli_free_result($result);
             $stmt->close();
@@ -66,16 +55,16 @@ CloseCon($conn);
                     <!-- Horizontal Form -->
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Add new department</h3>
+                            <h3 class="card-title">Add new center</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
                         <form class="form-horizontal" action="add.php" method="POST">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="txtDeptName" class="col-sm-2 col-form-label">Department Name</label>
+                                    <label for="txtCenterName" class="col-sm-2 col-form-label">Center Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="txtDeptName" name="txtDeptName" value="" placeholder="Department name">
+                                        <input type="text" class="form-control" id="txtCenterName" name="txtCenterName" value="" placeholder="Center name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -84,31 +73,6 @@ CloseCon($conn);
                                         <input type="text" class="form-control" id="txtDescription" name="txtDescription" value="" placeholder="Description">
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label for="ddlCenter" class="col-sm-2 col-form-label">Center</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" name="ddlCenter" id="ddlCenter">
-                                            <?php
-                                            $conn = OpenCon();
-                                            $sql = "SELECT * FROM centers where `status` = 1";
-                                            if ($result = mysqli_query($conn, $sql)) {
-                                                if (mysqli_num_rows($result) > 0) {
-                                                    while ($row = mysqli_fetch_array($result)) {
-                                            ?>
-                                                        <option value="<?php echo $row["id"]; ?>"><?php echo $row["center_name"] ?></option>
-                                            <?php
-                                                    }
-                                                    mysqli_free_result($result);
-                                                }
-                                            } else {
-                                                echo "ERROR: Không thể thực thi câu lệnh $sql. " . mysqli_error($conn);
-                                            }
-                                            CloseCon($conn);
-                                            ?>
-                                        </select>
-                                    </div>
-                                </div>
-
                                 <div class="form-group row">
                                     <label for="ddlStatus" class="col-sm-2 col-form-label">Status</label>
                                     <div class="col-sm-10">
