@@ -9,8 +9,7 @@
 
     <meta name="copyright" content="MACode ID, https://macodeid.com/">
     <link rel="icon" href="../../assets/img/icons/hospital-building.png">
-
-    <title>About us</title>
+    <title>Services</title>
 
     <link rel="stylesheet" href="../../assets/css/maicons.css">
 
@@ -30,17 +29,17 @@
 
     <?php include_once "shared/header.php" ?>
 
-    
+
     <div class="page-banner overlay-dark bg-image" style="background-image: url(../../assets/img/bg_image_1.jpg);">
         <div class="banner-section">
             <div class="container text-center wow fadeInUp">
                 <nav aria-label="Breadcrumb">
                     <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">About</li>
+                        <li class="breadcrumb-item active" aria-current="page">Services</li>
                     </ol>
                 </nav>
-                <h1 class="font-weight-normal">About Us</h1>
+                <h1 class="font-weight-normal">Services</h1>
             </div> <!-- .container -->
         </div> <!-- .banner-section -->
     </div> <!-- .page-banner -->
@@ -53,7 +52,7 @@
                         <div class="circle-shape bg-secondary text-white">
                             <span class="mai-chatbubbles-outline"></span>
                         </div>
-                        <p><span>Chat</span> with a doctors</p>
+                        <p><span>Chat</span> with a doctor</p>
                     </div>
                 </div>
                 <div class="col-md-4 py-3 wow zoomIn">
@@ -61,7 +60,7 @@
                         <div class="circle-shape bg-primary text-white">
                             <span class="mai-shield-checkmark"></span>
                         </div>
-                        <p><span>One</span>-Health Protection</p>
+                        <p><span>Health</span> Protection</p>
                     </div>
                 </div>
                 <div class="col-md-4 py-3 wow zoomIn">
@@ -69,7 +68,7 @@
                         <div class="circle-shape bg-accent text-white">
                             <span class="mai-basket"></span>
                         </div>
-                        <p><span>One</span>-Health Pharmacy</p>
+                        <p><span>Cambrigde</span>Pharmacy</p>
                     </div>
                 </div>
             </div>
@@ -78,22 +77,41 @@
 
     <div class="page-section">
         <div class="container">
+        <h1 class="text-center mb-5 wow fadeInUp">Our Services</h1>
             <div class="row justify-content-center">
-                <div class="col-lg-8 wow fadeInUp">
-                    <h1 class="text-center mb-3">Welcome to Cambrigde Hospital</h1>
-                    <div class="text-lg">
-                        <p>Cambrigde Hospital is the major provider of acute, maternity, sub-acute and specialist services in Melbourne’s rapidly growing outer north.
-                            Services are provided through our four main campuses:
-                            Cambrigde Hospital Epping, Broadmeadows Hospital, Bundoora Centre and Craigieburn Centre.
-
-                            Our emergency department treats over 103,000 patients each year, cares for over 92,000 patients admitted to hospital, and assists with the delivery of over 3,200 babies each year.
-
-                            The Cambrigde Hospital catchment includes three of the state’s six growth areas: Hume, Whittlesea and Mitchell. The swift development of new suburbs in the north will see our population grow by 17% (85,000 people) in the next five years (to 2026) alone, and by over 50% (more than 248,000 people) between 2021 and 2036.
-
-                            Cambrigde Hospital cares for a diverse community, born in more than 185 countries, who speak over 106 different languages and follow over 90 different religions or beliefs.
-
-                            Cambrigde Hospital has over 5,700 dedicated professional staff and has annual revenue turnover of over $700 million.</p>
-                    </div>
+                <div class="col-lg-12 wow fadeInUp">
+                    <?php
+                    require_once "../../db_connect.php";
+                    $conn = OpenCon();
+                    $sql = "SELECT * FROM services where `status` = 1";
+                    if ($result = mysqli_query($conn, $sql)) {
+                        if (mysqli_num_rows($result) > 0) {
+                    ?>
+                            <?php
+                            while ($row = mysqli_fetch_array($result)) {
+                            ?>
+                                <div class="row m-5">
+                                    <div class="col-md-2">
+                                        <img style="width: 100px; height: 100px;" src="../../upload/services_img/<?php echo $row['image']; ?>">
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3 class="text-success"><?php echo $row['service_name']; ?></h3>
+                                        <span><?php echo $row['description']; ?></span>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
+                    <?php
+                            mysqli_free_result($result);
+                        } else {
+                        }
+                    } else {
+                        echo "ERROR: Không thể thực thi câu lệnh $sql. " . mysqli_error($conn);
+                    }
+                    // Đóng kết nối
+                    CloseCon($conn);
+                    ?>
                 </div>
                 <div class="col-lg-10 mt-5">
                     <h1 class="text-center mb-5 wow fadeInUp">Our Doctors</h1>
