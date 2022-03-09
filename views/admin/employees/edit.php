@@ -74,7 +74,7 @@ if (isset($_POST["btn_submit"])) {
                     <!-- Horizontal Form -->
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Edit department</h3>
+                            <h3 class="card-title">Edit employee</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->

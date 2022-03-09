@@ -8,7 +8,6 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Services</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -57,7 +56,7 @@
                             <td><?php echo $row['id']; ?></td>
                             <td><?php echo $row['service_name']; ?></td>
                             <td><?php echo $row['description']; ?></td>
-                            <td> <img style="width: 150px; height: 150px;" src="../../../upload/services_img/<?php echo $row['image']; ?>" alt="No image"></td>
+                            <td> <img style="width: 100px; height: 100px;" src="../../../upload/services_img/<?php echo $row['image']; ?>" alt="No image"></td>
                             <td>
                               <?php
                                 if ($row['status']) {
@@ -135,7 +134,7 @@
       $("#example1").DataTable({
          "responsive": true
           // , "lengthChange": false
-          , "pageLength": 2
+          , "pageLength": 5
       })
   });
   <?php

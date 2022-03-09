@@ -1,19 +1,20 @@
 <?php
 require_once "../shared/admin_header.php";
 require_once "../../../db_connect.php";
+require_once "../../../util.php";
 unset($_SESSION['success']);
 unset($_SESSION['failed']);
 
 if (isset($_POST["btn_submit"])) {
     $flag = true;
     $conn = OpenCon();
-    if (isset($_POST["txtRole"]) && isset($_POST["txtDescription"])) {
+    if (isset($_POST["txtName"]) && isset($_POST["txtDescription"])) {
         $id = $_POST["txtId"];
-        $role = $_POST["txtRole"];
-        $description = $_POST["txtDescription"];
+        $name = test_input($_POST["txtName"]);
+        $description = test_input($_POST["txtDescription"]);
         $status = $_POST["ddlStatus"];
-        if (ctype_space($role) || trim($role) == "") {
-            $_SESSION['failed'] = "Role cannot be null";
+        if (ctype_space($name) || trim($name) == "") {
+            $_SESSION['failed'] = "Facility name cannot be null";
             $flag = false;
         }
         if (ctype_space($description) || trim($description) == "") {
@@ -21,31 +22,31 @@ if (isset($_POST["btn_submit"])) {
             $flag = false;
         }
         if ($flag) {
-            $stmt = $conn->prepare("SELECT * FROM `roles` WHERE `role` = ? and `id` <> ?");
-            $stmt->bind_param("si", $role, $id);
+            $stmt = $conn->prepare("SELECT * FROM `facilities` WHERE `facility_name` = ? and `id` <> ?");
+            $stmt->bind_param("si", $name, $id);
             $stmt->execute();
             $result = $stmt->get_result();
             if ($result->num_rows) {
-                $_SESSION['failed'] = "Role had already existed";
+                $_SESSION['failed'] = "Facility name had already existed";
                 $flag = false;
             }
             $stmt->close();
         }
         if ($flag) {
-            $stmt = $conn->prepare("UPDATE `roles` SET `role` = ?, `description`= ?,`status`=? WHERE `id` = ?");
-            $stmt->bind_param("ssii", $role, $description, $status, $id);
+            $stmt = $conn->prepare("UPDATE `facilities` SET `facility_name` = ?, `description`= ?,`status`=? WHERE `id` = ?");
+            $stmt->bind_param("ssii", $name, $description, $status, $id);
             $stmt->execute();
             if ($stmt->affected_rows >= 1) {
-                $_SESSION['success'] = "Edit role successfully";
+                $_SESSION['success'] = "Edit facility successfully";
             } else {
-                $_SESSION['failed'] = "Edit role failed !";
+                $_SESSION['failed'] = "Edit facility failed !";
                 // echo $conn->error;
             }
             mysqli_free_result($result);
             $stmt->close();
         }
         CloseCon($conn);
-        echo ("<script>location.href = '/eProject1/views/admin/roles/list.php';</script>");
+        echo ("<script>location.href = '/eProject1/views/admin/facilities/list.php';</script>");
     }
 }
 ?>
@@ -60,21 +61,21 @@ if (isset($_POST["btn_submit"])) {
                     <!-- Horizontal Form -->
                     <div class="card card-info">
                         <div class="card-header">
-                            <h3 class="card-title">Edit role</h3>
+                            <h3 class="card-title">Edit facility</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->
                         <?php
                         if (isset($_GET["id"]) && !empty($_GET["id"])) {
                             $conn = OpenCon();
-                            $stmt = $conn->prepare("SELECT * FROM `roles` WHERE `id` = ?");
+                            $stmt = $conn->prepare("SELECT * FROM `facilities` WHERE `id` = ?");
                             $stmt->bind_param("i", $_GET["id"]);
                             $stmt->execute();
                             $result = $stmt->get_result();
                             $row = mysqli_fetch_array($result);
                             mysqli_free_result($result);
                             CloseCon($conn);
-                            if(!$row){
+                            if (!$row) {
                                 // redirect to error page
                                 echo ("<script>location.href = '/eProject1/views/admin/shared/error.php';</script>");
                             }
@@ -84,9 +85,10 @@ if (isset($_POST["btn_submit"])) {
                             <input type="hidden" name="txtId" id="txtId" value="<?php echo $row['id'] ?>">
                             <div class="card-body">
                                 <div class="form-group row">
-                                    <label for="txtRole" class="col-sm-2 col-form-label">Role</label>
+                                    <label for="txtName" class="col-sm-2 col-form-label">Facility Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="txtRole" name="txtRole" value="<?php echo $row['role'] ?>" placeholder="Role">
+                                        <input type="text" class="form-control" id="txtName" name="txtName" value="<?php echo $row['facility_name'] ?>" placeholder="Department Name">
+
                                     </div>
                                 </div>
                                 <div class="form-group row">

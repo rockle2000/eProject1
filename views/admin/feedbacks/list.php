@@ -1,4 +1,4 @@
- <?php 
+<?php 
   require_once "../shared/admin_header.php";
 ?>
 
@@ -13,7 +13,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Departments</li>
+              <li class="breadcrumb-item active">Feedbacks</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -29,13 +29,13 @@
           <div class="col-12">
             <div class="card">
               <div class="card-header bg-primary">
-                <h3 class="card-title">List Departments</h3>
+                <h3 class="card-title">List Feedbacks</h3>
               </div>
               <div class="card-body">
           <?php 
             require_once "../../../db_connect.php";
             $conn = OpenCon();
-            $sql = "SELECT d.id,d.dept_name,d.description,c.center_name,d.status FROM `departments` d JOIN `centers` c ON d.center_id = c.id";
+            $sql = "select * from `feedbacks`";
               if ($result = mysqli_query($conn, $sql)) {
                 if (mysqli_num_rows($result) > 0) {
                   ?>
@@ -43,11 +43,11 @@
                       <thead>
                         <tr>
                           <th>Id</th>
-                          <th>DeptName</th>
-                          <th>Center</th>
-                          <th>Description</th>
-                          <th>Status</th>
-                          <th>Action</th>
+                          <th>FullName</th>
+                          <th>Email</th>
+                          <th>Subject</th>
+                          <th>Comment</th>
+                          <th>Created At</th>
                         </tr>
                       </thead>
                     <?php
@@ -55,51 +55,17 @@
                         ?>
                         <tr>
                             <td><?php echo $row['id']; ?></td>
-                            <td><?php echo $row['dept_name']; ?></td>
-                            <td><?php echo $row['center_name']?></td>
-                            <td><?php echo $row['description']; ?></td>
-                            <td>
-                              <?php
-                                if ($row['status']) {
-                                  ?>
-                                    <button class="btn btn-success disabled">
-                                      <i class="fas fa-check-circle"></i>
-                                      Available
-                                    </button>
-                                  <?php
-                                }else{
-                                    ?>
-                                     <button class="btn btn-danger disabled">
-                                        <i class="far fa-times-circle"></i>
-                                        Disabled
-                                    </button>
-                                    <?php
-                                  }
-                               ?>
-                            </td>
-                            <td>
-                              <a href="edit.php?id=<?php echo $row['id'];?>" class="btn btn-primary"><i class="fas fa-edit"></i> Edit</a>
-                              <span>
-                                  <?php
-                                    if ($row['status']) {
-                                      ?>
-                                          <a href="delete.php?id=<?php echo $row['id'];?>"  onclick="return confirm('Are you sure you want to delete this department ?')" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Delete</a>
-                                      <?php
-                                    }else{
-                                        ?>
-                                          <a href="active.php?id=<?php echo $row['id'];?>" class="btn btn-success"><i class="fas fa-plus"></i> Active</a>
-                                        <?php
-                                      }
-                                   ?>
-                                </span>
-                              </td>
+                            <td><?php echo $row['name']; ?></td>
+                            <td><?php echo $row['email']; ?></td>
+                            <td><?php echo $row['subject']; ?></td>
+                            <td><?php echo $row['comment']; ?></td>
+                            <td><?php $time = strtotime($row['created_at']); echo date('d-m-Y',$time); ?></td>
                         </tr>
                         <?php
                     }
                     ?>
                     </table>
                     <?php
-                    // Giải phóng bộ nhớ của biến
                     mysqli_free_result($result);
                 } else {
                     ?>
@@ -135,7 +101,7 @@
       $("#example1").DataTable({
          "responsive": true
           // , "lengthChange": false
-          , "pageLength":5
+          , "pageLength": 5
       })
   });
   <?php
