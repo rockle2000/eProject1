@@ -251,7 +251,7 @@ $url = $_SERVER['REQUEST_URI'];
               </ul>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="../feedbacks/list.php" class="nav-link <?php echo strpos($url, 'feedbacks/list.php') != false ? 'active' : '' ?>">
                 <i class="nav-icon fa fa-comment-medical"></i>
                 <p>
                   Feedbacks

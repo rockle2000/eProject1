@@ -1,3 +1,8 @@
+<style>
+  html{
+    scroll-behavior: smooth;
+  }
+</style>
 <header>
   <div class="topbar">
     <div class="container">
@@ -56,10 +61,10 @@
             <a class="nav-link" href="department.php">Departments</a>
           </li>
           <li class="nav-item <?php echo strpos($url, 'facility.php') != false ? 'active' : '' ?>">
-            <a class="nav-link" href="facility.php">Facility</a>
+            <a class="nav-link" href="facility.php">Facilities</a>
           </li>
           <li class="nav-item <?php echo strpos($url, 'service.php') != false ? 'active' : '' ?>">
-            <a class="nav-link" href="service.php">Service</a>
+            <a class="nav-link" href="service.php">Services</a>
           </li>
           <li class="nav-item <?php echo strpos($url, 'center.php') != false ? 'active' : '' ?>">
             <a class="nav-link" href="center.php">Centers</a>
@@ -67,11 +72,23 @@
           <li class="nav-item <?php echo strpos($url, 'contact.php') != false ? 'active' : '' ?>">
             <a class="nav-link" href="contact.php">Contact</a>
           </li>
-          <li class="nav-item <?php echo strpos($url, 'stories.php') != false ? 'active' : '' ?>">
-            <a class="nav-link" href="storie.php">Success Stories</a>
+          <li class=" nav-item <?php echo strpos($url, 'stories.php') != false ? 'active' : '' ?>" >
+            <a class="smooth-goto nav-link" href="home.php#success_stories">Success Stories</a>
           </li>
         </ul>
       </div> <!-- .navbar-collapse -->
     </div> <!-- .container -->
   </nav>
 </header>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+<script type="text/javascript">
+  if(window.location.hash){
+    let hash = window.location.hash;
+    if($(hash).length){
+      $('html,body').animate({
+        scrollTop: $(hash).offset().top
+      },900,'');
+    }
+  }
+
+</script>
