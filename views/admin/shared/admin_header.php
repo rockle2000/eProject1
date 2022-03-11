@@ -103,7 +103,7 @@ $url = $_SERVER['REQUEST_URI'];
       <!-- Brand Logo -->
       <a href="index3.html" class="brand-link">
         <img src="../../../dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light">Cambridge</span>
+        <span class="brand-text font-weight-light">Dashboard</span>
       </a>
 
       <!-- Sidebar -->
@@ -129,12 +129,20 @@ $url = $_SERVER['REQUEST_URI'];
             </div>
           </div>
         </div>
-
+        
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="../appoinments/list.php" class="nav-link <?php echo strpos($url, 'appoinments/list.php') != false ? 'active' : '' ?>">
+              <i class="nav-icon fas fa-calendar-check"></i>
+                <p>
+                  Appointments
+                </p>
+              </a>
+            </li>
             <li class="nav-item <?php echo (strpos($url, 'departments/list.php') != false || strpos($url, 'departments/add.php') != false) ? 'menu-open' : '' ?>">
               <a href="#" class="nav-link <?php echo (strpos($url, 'departments/list.php') != false || strpos($url, 'departments/add.php') != false) ? 'active' : '' ?>">
                 <i class="nav-icon fas fa-building"></i>
@@ -206,7 +214,7 @@ $url = $_SERVER['REQUEST_URI'];
             </li>
             <li class="nav-item <?php echo (strpos($url, 'roles/list.php') != false || strpos($url, 'roles/add.php') != false) ? 'menu-open' : '' ?>">
               <a href="#" class="nav-link <?php echo (strpos($url, 'roles/list.php') != false || strpos($url, 'roles/add.php') != false) ? 'active' : '' ?>">
-              <i class="nav-icon fas fa-user-tag"></i>
+                <i class="nav-icon fas fa-user-tag"></i>
                 <p>
                   Roles
                   <i class="right fas fa-angle-left"></i>

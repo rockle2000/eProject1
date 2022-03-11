@@ -105,7 +105,7 @@ CloseCon($conn);
                                 <div class="form-group row">
                                     <label for="txtDescription" class="col-sm-2 col-form-label">Description</label>
                                     <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="txtDescription" name="txtDescription" value="" placeholder="Description">
+                                        <input type="text" class="form-control" id="txtDescription" name="txtDescription" value="" placeholder="Description">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -126,6 +126,7 @@ CloseCon($conn);
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
+                                <a href="list.php" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to list</a>
                                 <button type="submit" name="btn_submit" class="btn btn-success">Add</button>
                             </div>
                             <!-- /.card-footer -->

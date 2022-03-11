@@ -30,7 +30,7 @@ if (isset($_POST["btn_submit"])) {
             $_SESSION['failed'] = "Email is invalid";
             $flag = false;
         }
-        if(!preg_match("/^(([+]{0,1}\d{2})|\d?)[\s-]?[0-9]{2}[\s-]?[0-9]{3}[\s-]?[0-9]{4}$/", $phone)) {
+        if (!preg_match("/^(([+]{0,1}\d{2})|\d?)[\s-]?[0-9]{2}[\s-]?[0-9]{3}[\s-]?[0-9]{4}$/", $phone)) {
             $_SESSION['failed'] = "Phone is invalid";
             $flag = false;
         }
@@ -89,7 +89,7 @@ if (isset($_POST["btn_submit"])) {
                             $row = mysqli_fetch_array($result);
                             mysqli_free_result($result);
                             CloseCon($conn);
-                            if(!$row){
+                            if (!$row) {
                                 // redirect to error page
                                 echo ("<script>location.href = '/eProject1/views/admin/shared/error.php';</script>");
                             }
@@ -183,6 +183,7 @@ if (isset($_POST["btn_submit"])) {
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
+                                <a href="list.php" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to list</a>
                                 <button type="submit" name="btn_submit" class="btn btn-success">Save</button>
                             </div>
                             <!-- /.card-footer -->

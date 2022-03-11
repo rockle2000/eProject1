@@ -61,7 +61,7 @@
                         <div class="circle-shape bg-primary text-white">
                             <span class="mai-shield-checkmark"></span>
                         </div>
-                        <p><span>One</span>-Health Protection</p>
+                        <p><span>Health</span> Protection</p>
                     </div>
                 </div>
                 <div class="col-md-4 py-3 wow zoomIn">
@@ -69,7 +69,7 @@
                         <div class="circle-shape bg-accent text-white">
                             <span class="mai-basket"></span>
                         </div>
-                        <p><span>One</span>-Health Pharmacy</p>
+                        <p><span>Cambrigde</span> Pharmacy</p>
                     </div>
                 </div>
             </div>

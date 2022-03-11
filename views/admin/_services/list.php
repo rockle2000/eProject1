@@ -1,6 +1,14 @@
 <?php 
   require_once "../shared/admin_header.php";
 ?>
+<style>
+  .desc {
+    max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  }
+</style>
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -55,7 +63,7 @@
                         <tr>
                             <td><?php echo $row['id']; ?></td>
                             <td><?php echo $row['service_name']; ?></td>
-                            <td><?php echo $row['description']; ?></td>
+                            <td class="desc"><?php echo $row['description']; ?></td>
                             <td> <img style="width: 100px; height: 100px;" src="../../../upload/services_img/<?php echo $row['image']; ?>" alt="No image"></td>
                             <td>
                               <?php

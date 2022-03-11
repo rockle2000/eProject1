@@ -58,7 +58,7 @@ session_start();
         echo $row['password'];
         if (password_verify($password, $row['password'])) {
             $_SESSION['email'] = $email;
-            header('location: departments/list.php');
+            header('location: appoinments/list.php');
         } else {
             $_SESSION['err_login'] = "Invalid username or password";
         }

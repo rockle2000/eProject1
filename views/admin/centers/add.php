@@ -86,6 +86,7 @@ CloseCon($conn);
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
+                                <a href="list.php" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to list</a>
                                 <button type="submit" name="btn_submit" class="btn btn-success">Add</button>
                             </div>
                             <!-- /.card-footer -->

@@ -13,7 +13,7 @@ function add($conn)
             $email = test_input($_POST["txtEmail"]);
             $phone = test_input($_POST["txtPhone"]);
             $time = strtotime($_POST["txtDob"]);
-            $dob = date('Y-m-d H:i:s',$time);
+            $dob = date('Y-m-d H:i:s', $time);
             $deparment = test_input($_POST["ddlDepartment"]);
             $role = test_input($_POST["ddlRole"]);
             $status = test_input($_POST["ddlStatus"]);
@@ -25,7 +25,7 @@ function add($conn)
                 $_SESSION['failed'] = "Email cannot be null";
                 return;
             }
-            if(!preg_match("/^(([+]{0,1}\d{2})|\d?)[\s-]?[0-9]{2}[\s-]?[0-9]{3}[\s-]?[0-9]{4}$/", $phone)) {
+            if (!preg_match("/^(([+]{0,1}\d{2})|\d?)[\s-]?[0-9]{2}[\s-]?[0-9]{3}[\s-]?[0-9]{4}$/", $phone)) {
                 $_SESSION['failed'] = "Phone is invalid";
                 return;
             }
@@ -44,7 +44,7 @@ function add($conn)
                 return;
             }
             $stmt = $conn->prepare("INSERT INTO `employees` (`full_name`,`dob`,`email`,`phone_number`,`department_id`,`role_id`,`status`) VALUES (?,?,?,?,?,?,?)");
-            $stmt->bind_param("ssssiii", $fullname, $dob, $email,$phone,$deparment,$role, $status);
+            $stmt->bind_param("ssssiii", $fullname, $dob, $email, $phone, $deparment, $role, $status);
             $stmt->execute();
             if ($stmt->affected_rows >= 1) {
                 $_SESSION['success'] = "Add new employee successfully";
@@ -163,6 +163,7 @@ CloseCon($conn);
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
+                                <a href="list.php" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Back to list</a>
                                 <button type="submit" name="btn_submit" class="btn btn-success">Add</button>
                             </div>
                             <!-- /.card-footer -->

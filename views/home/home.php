@@ -40,7 +40,7 @@ session_start();
       <div class="container text-center wow zoomIn">
         <span class="subhead">Let's make your life happier</span>
         <h1 class="display-4">Healthy Living</h1>
-        <a href="#" class="btn btn-primary">Let's Consult</a>
+        <a href="home.php#bookAppointment" class="btn btn-primary">Book Appoinment</a>
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@ session_start();
               <div class="circle-shape bg-secondary text-white">
                 <span class="mai-chatbubbles-outline"></span>
               </div>
-              <p><span>Chat</span> with doctors</p>
+              <p><span>Chat</span> with a doctor</p>
             </div>
           </div>
           <div class="col-md-4 py-3 py-md-0">
@@ -149,7 +149,7 @@ session_start();
         <div class="item">
           <div class="card-doctor">
             <div class="header">
-              <img src="../../assets/img/doctors/doctor_3.jpg" alt="">
+              <img src="../../assets/img/doctors/doctor_1.jpg" alt="">
               <div class="meta">
                 <a href="#"><span class="mai-call"></span></a>
                 <a href="#"><span class="mai-logo-whatsapp"></span></a>
@@ -164,7 +164,7 @@ session_start();
         <div class="item">
           <div class="card-doctor">
             <div class="header">
-              <img src="../../assets/img/doctors/doctor_3.jpg" alt="">
+              <img src="../../assets/img/doctors/doctor_2.jpg" alt="">
               <div class="meta">
                 <a href="#"><span class="mai-call"></span></a>
                 <a href="#"><span class="mai-logo-whatsapp"></span></a>
@@ -264,9 +264,8 @@ session_start();
       </div>
     </div>
   </div> <!-- .page-section -->
-
   <div class="page-section">
-    <div class="container">
+    <div class="container" id="bookAppointment">
       <h1 class="text-center wow fadeInUp">Make an Appointment</h1>
       <form class="main-form" action="#" method="POST">
         <div class="row mt-5 ">
@@ -335,8 +334,22 @@ session_start();
             $_SESSION['failed'] = "Phone number cannot be null";
             $flag = false;
           }
+          if (!preg_match("/^[a-zA-Z\\s]*$/", $full_name)) {
+            $_SESSION['failed'] = "Full name is invalid";
+            $flag = false;
+          }
           if (!preg_match("/^(([+]{0,1}\d{2})|\d?)[\s-]?[0-9]{2}[\s-]?[0-9]{3}[\s-]?[0-9]{4}$/", $phone)) {
             $_SESSION['failed'] = "Phone is invalid";
+            $flag = false;
+          }
+
+          $now = date('Y-m-d H:i:s');
+          if($ap_date < $now){
+            $_SESSION['failed'] = "Cannot book appoinment on the day in the past";
+            $flag = false;
+          }
+          if($dob > $now){
+            $_SESSION['failed'] = "Invalid date of birth";
             $flag = false;
           }
           if ($flag) {

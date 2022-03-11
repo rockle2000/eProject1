@@ -9,7 +9,7 @@
 
     <meta name="copyright" content="MACode ID, https://macodeid.com/">
     <link rel="icon" href="../../assets/img/icons/hospital-building.png">
-    <title>Services</title>
+    <title>Centers</title>
 
     <link rel="stylesheet" href="../../assets/css/maicons.css">
 
@@ -36,10 +36,10 @@
                 <nav aria-label="Breadcrumb">
                     <ol class="breadcrumb breadcrumb-dark bg-transparent justify-content-center py-0 mb-2">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Services</li>
+                        <li class="breadcrumb-item active" aria-current="page">Centers</li>
                     </ol>
                 </nav>
-                <h1 class="font-weight-normal">Services</h1>
+                <h1 class="font-weight-normal">Centers</h1>
             </div> <!-- .container -->
         </div> <!-- .banner-section -->
     </div> <!-- .page-banner -->
@@ -77,13 +77,13 @@
 
     <div class="page-section">
         <div class="container">
-        <h1 class="text-center mb-5 wow fadeInUp">Our Services</h1>
+            <h1 class="text-center mb-5 wow fadeInUp">Our Centers</h1>
             <div class="row justify-content-center">
                 <div class="col-lg-12 wow fadeInUp">
                     <?php
                     require_once "../../db_connect.php";
                     $conn = OpenCon();
-                    $sql = "SELECT * FROM services where `status` = 1";
+                    $sql = "SELECT * FROM centers where `status` = 1";
                     if ($result = mysqli_query($conn, $sql)) {
                         if (mysqli_num_rows($result) > 0) {
                     ?>
@@ -91,13 +91,8 @@
                             while ($row = mysqli_fetch_array($result)) {
                             ?>
                                 <div class="row m-5">
-                                    <div class="col-md-3">
-                                        <img style="width: 200px; height: 200px;" src="../../upload/services_img/<?php echo $row['image']; ?>">
-                                    </div>
-                                    <div class="col-md-9">
-                                        <h3 class="text-success"><?php echo $row['service_name']; ?></h3>
-                                        <span><?php echo $row['description']; ?></span>
-                                    </div>
+                                    <h3 class="text-success"><?php echo $row['center_name']; ?></h3>
+                                    <span><?php echo $row['description']; ?></span>
                                 </div>
                             <?php
                             }

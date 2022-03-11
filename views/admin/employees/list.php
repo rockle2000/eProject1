@@ -43,7 +43,6 @@
                     <table id="example1" class="table table-bordered table-striped">
                       <thead>
                         <tr>
-                          <th>Id</th>
                           <th>FullName</th>
                           <th>DOB</th>
                           <th>Phone</th>
@@ -58,7 +57,6 @@
                     while ($row = mysqli_fetch_array($result)) {
                         ?>
                         <tr>
-                            <td><?php echo $row['id']; ?></td>
                             <td><?php echo $row['full_name']; ?></td>
                             <td><?php $time = strtotime($row['dob']); echo date('d-m-Y',$time); ?></td>
                             <td><?php echo $row['phone_number']; ?></td>
@@ -139,11 +137,10 @@
 
 <script type="text/javascript">
   $(function() {
-      $("#example1").DataTable({
-         "responsive": true
-          // , "lengthChange": false
-          , "pageLength": 5
-      })
+    $("#example1").DataTable({
+             "responsive": true
+            , "pageLength": 5
+        })
   });
   <?php
   if (isset($_SESSION['success'])) {

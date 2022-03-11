@@ -1,7 +1,17 @@
  <?php 
   require_once "../shared/admin_header.php";
 ?>
-
+<style>
+  .desc {
+    max-width: 400px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  }
+  .center {
+    max-width: 100px;
+  }
+</style>
 <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -56,8 +66,8 @@
                         <tr>
                             <td><?php echo $row['id']; ?></td>
                             <td><?php echo $row['dept_name']; ?></td>
-                            <td><?php echo $row['center_name']?></td>
-                            <td><?php echo $row['description']; ?></td>
+                            <td class="center"><?php echo $row['center_name']?></td>
+                            <td class="desc"><?php echo $row['description']; ?></td>
                             <td>
                               <?php
                                 if ($row['status']) {

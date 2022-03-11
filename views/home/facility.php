@@ -68,7 +68,7 @@
                         <div class="circle-shape bg-accent text-white">
                             <span class="mai-basket"></span>
                         </div>
-                        <p><span>Cambrigde</span>Pharmacy</p>
+                        <p><span>Cambrigde</span> Pharmacy</p>
                     </div>
                 </div>
             </div>
@@ -91,10 +91,10 @@
                             while ($row = mysqli_fetch_array($result)) {
                             ?>
                                 <div class="row m-5">
-                                    <div class="col-md-2">
-                                        <img style="width: 100px; height: 100px;" src="../../upload/facilities_img/<?php echo $row['image']; ?>">
+                                    <div class="col-md-3">
+                                        <img style="width: 200px; height: 200px;" src="../../upload/facilities_img/<?php echo $row['image']; ?>">
                                     </div>
-                                    <div class="col-md-10">
+                                    <div class="col-md-9">
                                         <h3 class="text-success"><?php echo $row['facility_name']; ?></h3>
                                         <span><?php echo $row['description']; ?></span>
                                     </div>
