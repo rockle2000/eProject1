@@ -95,6 +95,10 @@ session_start();
             $_SESSION['failed'] = "Message cannot be null";
             $flag = false;
           }
+          if (!preg_match("/^[a-zA-Z\\s]*$/", $full_name)) {
+            $_SESSION['failed'] = "Full name is invalid";
+            $flag = false;
+          }
           if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $_SESSION['failed'] = "Email is invalid";
             $flag = false;

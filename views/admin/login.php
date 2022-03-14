@@ -54,8 +54,6 @@ session_start();
         $stmt->execute();
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
-        echo $password;
-        echo $row['password'];
         if (password_verify($password, $row['password'])) {
             $_SESSION['email'] = $email;
             header('location: appoinments/list.php');
@@ -70,8 +68,6 @@ session_start();
         <div class="container-login100">
             <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
                 <form class="login100-form validate-form flex-sb flex-w" action="login.php" method="POST">
-
-
                     <?php if (isset($_SESSION['err_login'])) { ?>
                         <div class="alert alert-danger" style="width: 100%;">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -82,7 +78,7 @@ session_start();
                         Admin Login
                     </span>
                     <span class="txt1 p-b-11">
-                        Username
+                        Email
                     </span>
                     <div class="wrap-input100 validate-input m-b-36" data-validate="Email is required">
                         <input class="input100" type="text" name="email">
@@ -99,7 +95,6 @@ session_start();
                         <input class="input100" type="password" name="password">
                         <span class="focus-input100"></span>
                     </div>
-
                     <div class="flex-sb-m w-full p-b-48">
                         <div class="contact100-form-checkbox">
                             <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
@@ -107,28 +102,22 @@ session_start();
                                 Remember me
                             </label>
                         </div>
-
                         <div>
                             <a href="#" class="txt3">
                                 Forgot Password?
                             </a>
                         </div>
                     </div>
-
                     <div class="container-login100-form-btn">
                         <button class="login100-form-btn" name="btn_submit">
                             Login
                         </button>
                     </div>
-
                 </form>
             </div>
         </div>
     </div>
-
-
     <div id="dropDownSelect1"></div>
-
     <!--===============================================================================================-->
     <script src="../../admin_login/vendor/jquery/jquery-3.2.1.min.js"></script>
     <!--===============================================================================================-->
